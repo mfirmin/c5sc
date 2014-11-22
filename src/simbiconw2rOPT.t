@@ -1,0 +1,62 @@
+BEGINSCRIPT simbicon(dt, cde, cdo, cve, cvo, tor, swhe, swho, swke, swko, stke, stko, ankle)
+
+PHASE 0
+ACTIONS
+	POSE neck2head(0.0748411119, 300.013153, 29.9924564);
+	POSE uTorso2neck(-0.0298149642, 299.999847, 30.0345211);
+	POSE waist(-0.0282931942, 600.036072, 60.0250397);
+	POSE lTorso2uTorso(-0.176927716, 599.989075, 59.9430008);
+	POSE lWrist(-0.0187743809, 5.02121019, 2.95328379);
+	POSE rWrist(0.00284638931, 5.03782177, 3.01143384);
+	POSE rKnee(swke, 300.020905, 30.067091);
+	POSE rAnkle(ankle, 299.975494, 30.0393028);
+	POSE lKnee(stke, 299.954254, 29.9110489);
+	POSE lAnkle(ankle, 300.051453, 30.0277557);
+	POSE rShoulder(0.258378744, 100.102333, 29.9937191);
+	POSE rElbow(-0.0551367179, 100.027588, 29.9617996);
+	POSE lShoulder(-0.290427446, 100.04464, 30.0612373);
+	POSE lElbow(-0.399634242, 99.9914169, 29.9884205);
+	VPD uTorso(tor, 300.060608, 29.9880619).joint(lHip);
+	COMFB2 0 -0.2 j rAnkle
+	VPD rThigh(swhe, -300.020691, -30.0128155).joint(rHip).flags(s);
+ENDACTIONS
+TRANSITION to(1).after(time dt);
+ENDPHASE
+
+PHASE 1
+ACTIONS
+	POSE rKnee(swko, 299.984161, 30.0442486);
+	POSE lKnee(stko, 300.015167, 29.9921856);
+	VPD uTorso(tor, 299.959137, 30.0091686).joint(lHip);
+	COMFB2 -2.2 0 j rAnkle
+	VPD rThigh(swho, -299.964478, -30.019043).joint(rHip).flags(s);
+ENDACTIONS
+TRANSITION to(2).after(contact rFoot);
+ENDPHASE
+
+PHASE 2
+ACTIONS
+	POSE lKnee(swke, 300.069824, 30.0099983);
+	POSE rShoulder(-0.358380407, 100.063316, 30.0310307);
+	POSE rElbow(-0.353185922, 100.063179, 30.0386238);
+	POSE lShoulder(0.321303964, 100.004417, 29.9580173);
+	POSE lElbow(-0.0229779184, 100.015915, 29.9782887);
+	VPD uTorso(tor, 299.99295, 30.0413589).joint(rHip);
+	COMFB2 0 -0.2 j lAnkle
+	VPD lThigh(swhe, -299.964447, -30.0654964).joint(lHip).flags(s);
+ENDACTIONS
+TRANSITION to(3).after(time dt);
+ENDPHASE
+
+PHASE 3
+ACTIONS
+	POSE lKnee(swko, 300.013489, 29.9472771);
+	POSE rKnee(stko, 299.966156, 30.0223255);
+	VPD uTorso(tor, 300.062775, 30.0216351).joint(rHip);
+	COMFB2 -2.2 0 j lAnkle
+	VPD lThigh(swho, -300.016815, -29.9549122).joint(lHip).flags(s);
+ENDACTIONS
+TRANSITION to(-1).after(contact lFoot);
+ENDPHASE
+
+ENDSCRIPT

@@ -1,0 +1,48 @@
+TRAJECTORY fwdhsmid.traj
+SIGMA 0.002
+
+FROM 9
+
+- fwdhandspring.s 0
+> step.t 0
+;
+
+- fwdhandspring.s 0
+> step.t 1
+;
+
+- fwdhandspring.s 1
+;
+
+- fwdhandspring.s 2
+;
+
+- fwdhandspring.s 3
+;
+
+
+- fwdhandspring.s 5
+;
+
+- fwdhandspring.s 6
+;
+
+- fwdhandspring.s 7
+;
+
+- fwdhandspring.s 4
+;
+
+OBJECTIVES
+;
+
+TO
+
+- fwdhandspring.s 5
+;
+
+- fwdhandspring.s 9
+;
+
+OBJECTIVES
+;

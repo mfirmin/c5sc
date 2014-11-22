@@ -1,0 +1,25 @@
+graph
+{
+    STANDINGPOSE -- walk;
+    STANDINGPOSE -- SQUATPOSE;
+    SQUATPOSE -- backflip;
+    backflip -- STANDINGPOSE;
+    STANDINGPOSE -- fwdhop;
+    STANDINGPOSE -- step;
+    step -- fwdhandspring;
+    fwdhandspring -- walk;
+    walk -- fastwalk;
+    fastwalk -- run;
+    walk -- stop;
+    walk -- skip;
+    stop -- STANDINGPOSE;
+    step -- handstand;
+    handstand -- supine;
+    supine -- kip;
+    kip -- SQUATPOSE;
+    handstand -- walk_on_hands;
+    walk_on_hands -- supine;
+    STANDINGPOSE -- crawl;
+    crawl -- crawl2squat;
+    crawl2squat -- SQUATPOSE;
+}

@@ -1,0 +1,47 @@
+TRAJECTORY fwdwalkoverMID.traj
+SIGMA 0.002
+
+FROM 7
+
+- walkingHS.s 3
+> handstandwalk.t 0
+;
+
+- walkingHS.s 3
+> handstandwalk.t 1
+;
+
+- walkingHS.s 3
+> handstandwalk.t 2
+;
+
+- walkingHS.s 3
+> handstandwalk.t 3
+;
+
+- walkingHS.s 3
+> handstandwalk.t 4
+;
+
+- walkingHS.s 3
+> handstandwalk.t 5
+;
+
+- walkingHS.s 3
+> handstandwalk.t 6
+;
+
+OBJECTIVES
+;
+
+TO
+
+- fwdwalkover.s 6
+;
+
+- fwdwalkover.s 7
+;
+
+OBJECTIVES
++ min energy .002
+;

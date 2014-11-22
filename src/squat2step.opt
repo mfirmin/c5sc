@@ -1,0 +1,35 @@
+TRAJECTORY fwdwalkoverAngs.traj
+SIGMA .01
+
+FROM 4
+
+- standfromsquat.s 1
+;
+
+- standfromsquat.s 1
+> standVFFB.t 0
++ min time 10000
+
+;
+
+- standfromsquat.s 1
+> standVFFB.t 1
++ min time 10000
+;
+
+- standfromsquat.s 2
+;
+
+OBJECTIVES
+;
+
+TO
+
+- fwdhandspring.s 0
+;
+
+- fwdhandspring.s 7
+;
+
+OBJECTIVES
+;

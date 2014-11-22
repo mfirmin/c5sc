@@ -1,0 +1,85 @@
+TRAJECTORY walktraj.traj
+SIGMA 0.002
+
+FROM 17
+
+- stand2walk.t 1
+;
+
+- stand2walk.t 2
+;
+
+- stand2walk.t 2
+> simbicononce.t 0
+;
+
+- stand2walk.t 2
+> simbicononce.t 1
+;
+
+- stand2walk.t 2
+> simbicononce.t 2
+;
+
+- stand2walk.t 2
+> simbicononce.t 3
+;
+
+- stand2walk.t 3
+; 
+
+- stand2walk.t 3
+> simbicononce.t 0
+;
+
+- stand2walk.t 3
+> simbicononce.t 1
+;
+
+- stand2walk.t 3
+> simbicononce.t 2
+;
+
+- stand2walk.t 3
+> simbicononce.t 3
+;
+
+- stand2walk.t 5
+;
+
+- stand2walk.t 5
+> simbicononce.t 0
+;
+
+- stand2walk.t 5
+> simbicononce.t 1
+;
+
+- stand2walk.t 5
+> simbicononce.t 2
+;
+
+- stand2walk.t 5
+> simbicononce.t 3
+;
+
+- stand2walk.t 4
+;
+
+OBJECTIVES
+;
+
+TO
+
+- stand2walk.t 5
+> simbicononce.t 0
+;
+
+- stand2walk.t 6
+;
+
+OBJECTIVES
+;
+
+
+

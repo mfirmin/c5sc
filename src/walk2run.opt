@@ -1,0 +1,57 @@
+TRAJECTORY runtraj.traj
+SIGMA 0.002
+
+FROM 10
+
+- walk2times.s 1
+;
+
+- walk2times.s 1
+> simbicononce.t 0
+;
+
+- walk2times.s 1
+> simbicononce.t 1
+;
+
+- walk2times.s 1
+> simbicononce.t 2
+;
+
+- walk2times.s 1
+> simbicononce.t 3
+;
+
+- walk2times.s 2
+;
+
+- walk2times.s 2
+> simbicononce.t 0
+;
+
+- walk2times.s 2
+> simbicononce.t 1
+;
+
+- walk2times.s 2
+> simbicononce.t 2
+;
+
+- walk2times.s 2
+> simbicononce.t 3
+;
+
+OBJECTIVES
+;
+
+TO
+
+- run10times.s 0
+;
+
+- run10times.s 1
+;
+
+OBJECTIVES
++ min energy .2
+;

@@ -1,0 +1,43 @@
+TRAJECTORY runtraj.traj
+SIGMA 0.002
+
+FROM 7
+
+- fwdhandspring.s 1
+;
+
+- fwdhandspring.s 2
+;
+
+- fwdhandspring.s 3
+;
+
+- fwdhandspring.s 4
+;
+
+- fwdhandspring.s 5
+;
+
+- fwdhandspring.s 6
+;
+
+- fwdhandspring.s 7
++ min time 200
+;
+
+OBJECTIVES
+;
+
+TO
+
+- run10times.s 0
+> simbicon2phaseonce.t 1
+;
+
+- run10times.s 1
+;
+
+OBJECTIVES
++ min fallen 200
+
+;

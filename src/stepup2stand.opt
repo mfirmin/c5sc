@@ -1,0 +1,56 @@
+TRAJECTORY highstand.traj
+SIGMA .002
+
+FROM 9
+
+- onestep.s 0
+;
+
+- onestep.s 0
+> step_up.t 1
+;
+
+- onestep.s 0
+> step_up.t 2
+;
+
+- onestep.s 0
+> step_up.t 3
+;
+
+- onestep.s 0
+> step_up.t 4
+;
+
+- onestep.s 0
+> step_up.t 5
+;
+
+- onestep.s 0
+> step_up.t 6
+;
+
+- onestep.s 0
+> step_up.t 7
+;
+
+- onestep.s 0
+> step_up.t 8
+;
+
+
+OBJECTIVES
++ min time 2000
+;
+
+TO
+
+- onestep.s 1
+;
+
+- onestep.s 2
+;
+
+OBJECTIVES
++ min fallen 200000
+;

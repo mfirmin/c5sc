@@ -1,0 +1,11 @@
+longcombo.s
+walk.s
+walkcombo.s
+fwdhandspring2walk.t
+backflip.s
+crawling2stand.s
+handstand.s
+standForever.s
+skipfromwalk.s
+fwdhop.s
+walkinghandstand.s

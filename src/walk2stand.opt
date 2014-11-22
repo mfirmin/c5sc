@@ -1,0 +1,60 @@
+TRAJECTORY stand.traj
+SIGMA 0.002
+
+FROM 10
+
+- walk2times.s 1
+;
+
+- walk2times.s 1
+> simbicononce.t 0
+;
+
+- walk2times.s 1
+> simbicononce.t 1
+;
+
+- walk2times.s 1
+> simbicononce.t 2
+;
+
+- walk2times.s 1
+> simbicononce.t 3
+;
+
+- walk2times.s 2
+;
+
+- walk2times.s 2
+> simbicononce.t 0
+;
+
+- walk2times.s 2
+> simbicononce.t 1
+;
+
+- walk2times.s 2
+> simbicononce.t 2
+;
+
+- walk2times.s 2
+> simbicononce.t 3
+;
+
+OBJECTIVES
++ min energy .01
+;
+
+TO
+
+- stand5sec.s 0
+> standVFFB.t 0
+;
+
+- stand5sec.s 0
+> standVFFB.t 1
+;
+
+OBJECTIVES
++ min fallen 200000
+;

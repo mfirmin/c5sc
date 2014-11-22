@@ -1,0 +1,38 @@
+TRAJECTORY fwdASwithAngs.traj
+SIGMA 0.002
+
+FROM 5
+
+- walk2times.s 1
+;
+
+- walk2times.s 1
+> simbicononce.t 0
+;
+
+- walk2times.s 1
+> simbicononce.t 1
+;
+
+- walk2times.s 1
+> simbicononce.t 2
+;
+
+- walk2times.s 1
+> simbicononce.t 3
+;
+
+
+OBJECTIVES
+;
+
+TO
+
+- fwdhandspring.s 1
+;
+
+- fwdhandspring.s 7
+;
+
+OBJECTIVES
+;

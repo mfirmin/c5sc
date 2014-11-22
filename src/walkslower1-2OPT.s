@@ -1,0 +1,259 @@
+SCRIPTS standVFFB.t, walk2times.s;
+
+BEGINSCRIPT stand2walk(void)
+
+PHASE 0
+ACTIONS
+	LOAD walkstate.sav;
+ENDACTIONS
+TRANSITION to(1).after(complete);
+ENDPHASE
+
+PHASE 1
+TRANSITION to(2).after(complete);
+ENDPHASE
+
+PHASE 2
+> walk2times.s(void);
+TRANSITION to(3).after(complete);
+ENDPHASE
+
+
+>>>>>>>>>>>
+
+SCRIPTS simbicononce.t;
+
+BEGINSCRIPT walk(void)
+
+PHASE 0
+> simbicononce.t(0.2501252, 0.0162689481, -2.22635198, -0.176055074, -0.00225682231, -0.0918327421, -0.37778753, 0.681181073, 1.09376788, 0.0883049443, 0.0599447973, 0.096421726, -0.115471788);
+TRANSITION to(1).after(iterations 4);
+ENDPHASE
+
+
+>>>>>>>>>>>
+
+BEGINSCRIPT simbicon(dt, cde, cdo, cve, cvo, tor, swhe, swho, swke, swko, stke, stko, ankle)
+
+PHASE 0
+ACTIONS
+	POSE neck2head(0.0359814502, 299.990143, 29.9593773);
+	POSE uTorso2neck(-0.0026879427, 299.985535, 29.9766827);
+	POSE waist(0.0580532774, 599.999451, 60.0295296);
+	POSE lTorso2uTorso(0.035962794, 600.021851, 59.9824448);
+	POSE lWrist(0.021724632, 4.95385218, 3.01882386);
+	POSE rWrist(-0.0241244938, 4.99895334, 3.00271463);
+	POSE rKnee(swke, 300.030396, 30.0044422);
+	POSE rAnkle(ankle, 299.967987, 29.986517);
+	POSE lKnee(stke, 300.021698, 29.988224);
+	POSE lAnkle(ankle, 300.026489, 29.9991608);
+	POSE rShoulder(0.322901964, 100.01783, 30.0170765);
+	POSE rElbow(-0.0231729113, 99.9493942, 30.0127068);
+	POSE lShoulder(-0.309971869, 100.025482, 30.0146351);
+	POSE lElbow(-0.364906669, 100.025299, 30.0337887);
+	VPD uTorso(tor, 299.988495, 30.0048599).joint(lHip);
+	COMFB2 0.016269 -0.176055 j rAnkle
+	VPD rThigh(swhe, -299.996948, -29.9949894).joint(rHip).flags(s);
+ENDACTIONS
+TRANSITION to(1).after(time dt);
+ENDPHASE
+
+PHASE 1
+ACTIONS
+	POSE rKnee(swko, 300.02652, 30.0482159);
+	POSE lKnee(stko, 299.967896, 29.9882927);
+	VPD uTorso(tor, 300.002747, 30.0353127).joint(lHip);
+	COMFB2 -2.22635 -0.002257 j rAnkle
+	VPD rThigh(swho, -299.980957, -30.0008793).joint(rHip).flags(s);
+ENDACTIONS
+TRANSITION to(2).after(contact rFoot);
+ENDPHASE
+
+PHASE 2
+ACTIONS
+	POSE lKnee(swke, 299.958557, 30.0018673);
+	POSE rShoulder(-0.291501403, 99.9858398, 30.0312748);
+	POSE rElbow(-0.41424036, 100.013481, 29.9963455);
+	POSE lShoulder(0.315109283, 100.003128, 30.0081081);
+	POSE lElbow(-0.00934505835, 99.9973526, 29.9682407);
+	VPD uTorso(tor, 300.037628, 29.9949341).joint(rHip);
+	COMFB2 0.016269 -0.176055 j lAnkle
+	VPD lThigh(swhe, -300.017883, -29.9768505).joint(lHip).flags(s);
+ENDACTIONS
+TRANSITION to(3).after(time dt);
+ENDPHASE
+
+PHASE 3
+ACTIONS
+	POSE lKnee(swko, 300.0336, 30.0043221);
+	POSE rKnee(stko, 299.978485, 29.9801483);
+	VPD uTorso(tor, 299.987122, 30.0199661).joint(rHip);
+	COMFB2 -2.22635 -0.002257 j lAnkle
+	VPD lThigh(swho, -300.024628, -29.9963684).joint(lHip).flags(s);
+ENDACTIONS
+TRANSITION to(-1).after(contact lFoot);
+ENDPHASE
+
+ENDSCRIPT
+
+<<<<<<<<<<<
+
+
+PHASE 1
+> simbicononce.t(0.257107526, 0.0227846261, -2.17871857, -0.236955434, -0.0386388488, 0.00284043048, -0.392815232, 0.699959755, 1.11209142, 0.0586915053, 0.0469091982, 0.0984768644, -0.241733506);
+TRANSITION to(-1).after(complete);
+ENDPHASE
+
+
+>>>>>>>>>>>
+
+BEGINSCRIPT simbicon(dt, cde, cdo, cve, cvo, tor, swhe, swho, swke, swko, stke, stko, ankle)
+
+PHASE 0
+ACTIONS
+	POSE neck2head(0.0359814502, 299.990143, 29.9593773);
+	POSE uTorso2neck(-0.0026879427, 299.985535, 29.9766827);
+	POSE waist(0.0580532774, 599.999451, 60.0295296);
+	POSE lTorso2uTorso(0.035962794, 600.021851, 59.9824448);
+	POSE lWrist(0.021724632, 4.95385218, 3.01882386);
+	POSE rWrist(-0.0241244938, 4.99895334, 3.00271463);
+	POSE rKnee(swke, 300.030396, 30.0044422);
+	POSE rAnkle(ankle, 299.967987, 29.986517);
+	POSE lKnee(stke, 300.021698, 29.988224);
+	POSE lAnkle(ankle, 300.026489, 29.9991608);
+	POSE rShoulder(0.322901964, 100.01783, 30.0170765);
+	POSE rElbow(-0.0231729113, 99.9493942, 30.0127068);
+	POSE lShoulder(-0.309971869, 100.025482, 30.0146351);
+	POSE lElbow(-0.364906669, 100.025299, 30.0337887);
+	VPD uTorso(tor, 299.988495, 30.0048599).joint(lHip);
+	COMFB2 0.022785 -0.236955 j rAnkle
+	VPD rThigh(swhe, -299.996948, -29.9949894).joint(rHip).flags(s);
+ENDACTIONS
+TRANSITION to(1).after(time dt);
+ENDPHASE
+
+PHASE 1
+ACTIONS
+	POSE rKnee(swko, 300.02652, 30.0482159);
+	POSE lKnee(stko, 299.967896, 29.9882927);
+	VPD uTorso(tor, 300.002747, 30.0353127).joint(lHip);
+	COMFB2 -2.17872 -0.038639 j rAnkle
+	VPD rThigh(swho, -299.980957, -30.0008793).joint(rHip).flags(s);
+ENDACTIONS
+TRANSITION to(2).after(contact rFoot);
+ENDPHASE
+
+PHASE 2
+ACTIONS
+	POSE lKnee(swke, 299.958557, 30.0018673);
+	POSE rShoulder(-0.291501403, 99.9858398, 30.0312748);
+	POSE rElbow(-0.41424036, 100.013481, 29.9963455);
+	POSE lShoulder(0.315109283, 100.003128, 30.0081081);
+	POSE lElbow(-0.00934505835, 99.9973526, 29.9682407);
+	VPD uTorso(tor, 300.037628, 29.9949341).joint(rHip);
+	COMFB2 0.022785 -0.236955 j lAnkle
+	VPD lThigh(swhe, -300.017883, -29.9768505).joint(lHip).flags(s);
+ENDACTIONS
+TRANSITION to(3).after(time dt);
+ENDPHASE
+
+PHASE 3
+ACTIONS
+	POSE lKnee(swko, 300.0336, 30.0043221);
+	POSE rKnee(stko, 299.978485, 29.9801483);
+	VPD uTorso(tor, 299.987122, 30.0199661).joint(rHip);
+	COMFB2 -2.17872 -0.038639 j lAnkle
+	VPD lThigh(swho, -300.024628, -29.9963684).joint(lHip).flags(s);
+ENDACTIONS
+TRANSITION to(-1).after(contact lFoot);
+ENDPHASE
+
+ENDSCRIPT
+
+<<<<<<<<<<<
+
+
+PHASE 2
+> simbicononce.t(0.300000012, 0, -2.20000005, -0.200000003, 0, 0, -0.400000006, 0.699999988, 1.10000002, 0.0500000007, 0.0500000007, 0.100000001, -0.200000003);
+TRANSITION to(-1).after(complete);
+ENDPHASE
+
+
+>>>>>>>>>>>
+
+BEGINSCRIPT simbicon(dt, cde, cdo, cve, cvo, tor, swhe, swho, swke, swko, stke, stko, ankle)
+
+PHASE 0
+ACTIONS
+	POSE neck2head(0.0359814502, 299.990143, 29.9593773);
+	POSE uTorso2neck(-0.0026879427, 299.985535, 29.9766827);
+	POSE waist(0.0580532774, 599.999451, 60.0295296);
+	POSE lTorso2uTorso(0.035962794, 600.021851, 59.9824448);
+	POSE lWrist(0.021724632, 4.95385218, 3.01882386);
+	POSE rWrist(-0.0241244938, 4.99895334, 3.00271463);
+	POSE rKnee(swke, 300.030396, 30.0044422);
+	POSE rAnkle(ankle, 299.967987, 29.986517);
+	POSE lKnee(stke, 300.021698, 29.988224);
+	POSE lAnkle(ankle, 300.026489, 29.9991608);
+	POSE rShoulder(0.322901964, 100.01783, 30.0170765);
+	POSE rElbow(-0.0231729113, 99.9493942, 30.0127068);
+	POSE lShoulder(-0.309971869, 100.025482, 30.0146351);
+	POSE lElbow(-0.364906669, 100.025299, 30.0337887);
+	VPD uTorso(tor, 299.988495, 30.0048599).joint(lHip);
+	COMFB2 0 -0.2 j rAnkle
+	VPD rThigh(swhe, -299.996948, -29.9949894).joint(rHip).flags(s);
+ENDACTIONS
+TRANSITION to(1).after(time dt);
+ENDPHASE
+
+PHASE 1
+ACTIONS
+	POSE rKnee(swko, 300.02652, 30.0482159);
+	POSE lKnee(stko, 299.967896, 29.9882927);
+	VPD uTorso(tor, 300.002747, 30.0353127).joint(lHip);
+	COMFB2 -2.2 0 j rAnkle
+	VPD rThigh(swho, -299.980957, -30.0008793).joint(rHip).flags(s);
+ENDACTIONS
+TRANSITION to(2).after(contact rFoot);
+ENDPHASE
+
+PHASE 2
+ACTIONS
+	POSE lKnee(swke, 299.958557, 30.0018673);
+	POSE rShoulder(-0.291501403, 99.9858398, 30.0312748);
+	POSE rElbow(-0.41424036, 100.013481, 29.9963455);
+	POSE lShoulder(0.315109283, 100.003128, 30.0081081);
+	POSE lElbow(-0.00934505835, 99.9973526, 29.9682407);
+	VPD uTorso(tor, 300.037628, 29.9949341).joint(rHip);
+	COMFB2 0 -0.2 j lAnkle
+	VPD lThigh(swhe, -300.017883, -29.9768505).joint(lHip).flags(s);
+ENDACTIONS
+TRANSITION to(3).after(time dt);
+ENDPHASE
+
+PHASE 3
+ACTIONS
+	POSE lKnee(swko, 300.0336, 30.0043221);
+	POSE rKnee(stko, 299.978485, 29.9801483);
+	VPD uTorso(tor, 299.987122, 30.0199661).joint(rHip);
+	COMFB2 -2.2 0 j lAnkle
+	VPD lThigh(swho, -300.024628, -29.9963684).joint(lHip).flags(s);
+ENDACTIONS
+TRANSITION to(-1).after(contact lFoot);
+ENDPHASE
+
+ENDSCRIPT
+
+<<<<<<<<<<<
+
+
+ENDSCRIPT
+
+<<<<<<<<<<<
+
+
+PHASE 3
+TRANSITION to(-1).after(complete);
+ENDPHASE
+
+ENDSCRIPT

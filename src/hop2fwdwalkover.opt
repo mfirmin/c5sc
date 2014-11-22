@@ -1,0 +1,33 @@
+TRAJECTORY fwdASwithAngs.traj
+SIGMA 0.002
+
+FROM 5
+
+- fwdhop.s 1
+;
+
+- fwdhop.s 2
+;
+
+- fwdhop.s 3
+;
+
+- fwdhop.s 4
+;
+
+- fwdhop.s 5
+;
+
+OBJECTIVES
+;
+
+TO
+
+- fwdhandspring.s 1
+;
+
+- fwdhandspring.s 7
+;
+
+OBJECTIVES
+;

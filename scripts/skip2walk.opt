@@ -1,0 +1,53 @@
+TRAJECTORY walktraj.traj
+SIGMA .002
+
+FROM 8
+
+- skip2walk.s 2
+> skip.s 0
+;
+
+- skip2walk.s 2
+> skip.s 1
+;
+
+- skip2walk.s 2
+> skip.s 2
+;
+
+- skip2walk.s 2
+> skip.s 3
+;
+
+- skip2walk.s 2
+> skip.s 4
+;
+
+- skip2walk.s 2
+> skip.s 5
+;
+
+- skip2walk.s 2
+> skip.s 6
+;
+
+- skip2walk.s 2
+> skip.s 7
+;
+
+OBJECTIVES
+;
+
+TO
+
+- skip2walk.s 3
+> walkonce.s 0
+;
+
+- skip2walk.s 4
+;
+
+OBJECTIVES
++ min fallen 200000
+
+;
