@@ -1282,7 +1282,7 @@ int handleArgs(int argc, char** argv, std::stack<Controller> &controllers, std::
 
 int readFLT()
 {
-	string fltfile = "data/char.flt";
+	string fltfile = "../inputs/flt/char.flt";
 
 	if (flt_reader.open((char*)fltfile.c_str(), &human) != 0)
 	{
@@ -1393,7 +1393,7 @@ int nextOptGeneration(std::stack<Controller>& controllers, std::map<string, Cont
                     }
 
 
-                    human.load("OPTIMIZATION.state");
+                    human.load("../inputs/states/OPTIMIZATION.sav");
 
                     time = 0;
                     optimizer.resetGenerationTime();
@@ -1667,7 +1667,7 @@ int main(int argc, char** argv)
 
 	env = new Environment();
 
-	env->setFromFile("base.env");
+	env->setFromFile("../inputs/environments/base.env");
 
 	if (handleArgs(argc, argv, controllers, scripts, standaloneScripts) < 0)
 		return -1;
@@ -1725,6 +1725,9 @@ int main(int argc, char** argv)
 	cout << "Pause: Enter\n" << "Zoom: Scroll Wheel\n" << "Apply Force: Space\n"
 		 << "Exit: Escape\n";
 
+    std::cout << "read in flt..." << std::endl;
+
+
 
 //    StateList sl;
     std::stack<StateList*> sl;
@@ -1747,7 +1750,7 @@ int main(int argc, char** argv)
 
 //    controllerGraph.createGraph(scripts);
 
-    if (controllerGraph.openGraph("visualizer.dot") != 0)
+    if (controllerGraph.openGraph("../inputs/dot/visualizer.dot") != 0)
     {
         std::cerr << "Error reading in visusalization graph" << std::endl;
         return -1;
@@ -1804,6 +1807,9 @@ int main(int argc, char** argv)
 #endif
 
 		char* buffer = new char[128];
+
+
+        std::cout << "made it to main loop" << std::endl;
 
     // Main loop. TODO: Rework the whole int main to reduce clutter by a factor of 1000
 	while (true)
@@ -1863,7 +1869,7 @@ int main(int argc, char** argv)
             if (optimizer.isFirstRun() && currHierarchy.isEqual(optimizer.getFirstOptimizationHierarchy()))
             {
                 optimizer.startOptimizing();
-                human.save("OPTIMIZATION.state");
+                human.save("../inputs/states/OPTIMIZATION.state");
             }
             /* // Note, this will be handled when comparing the trajectories.
             else if (!optimizer.isFirstRun() && currHierarchy.isEqual(optimizer.getFirstOptimizationHierarchy()))
@@ -2306,7 +2312,7 @@ int main(int argc, char** argv)
 		if (glfwGetKey(window, 'S') == GLFW_PRESS && !S_DOWN)
 		{
             S_DOWN = true;
-			human.save("manual.state");
+			human.save("../inputs/states/manual.sav");
             std::cout << "Saving State ... " << std::endl;
 		}
         if (S_DOWN && glfwGetKey(window, 'S') == GLFW_RELEASE)
@@ -2316,7 +2322,7 @@ int main(int argc, char** argv)
 		if (glfwGetKey(window, 'L') == GLFW_PRESS && !L_DOWN)
 		{
             L_DOWN = true;
-			human.load("manual.state");
+			human.load("../inputs/states/manual.sav");
             std::cout << "Loading State ... " << std::endl;
 		}
         if (L_DOWN && glfwGetKey(window, 'L') == GLFW_RELEASE)

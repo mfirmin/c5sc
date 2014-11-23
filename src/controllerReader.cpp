@@ -79,7 +79,7 @@ int controllerReader::readScript(char* filename, const Human& human, std::map<st
 	if (!ifs)
 	{
 		//otherwise look in scripts folder
-		string fname = "../scripts/";
+		string fname = "../inputs/scripts/";
 		fname.append(filename);
 		ifs.open(fname.c_str());
 		if (!ifs)
