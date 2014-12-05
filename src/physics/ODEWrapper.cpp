@@ -10,7 +10,7 @@
 #include <vector>
 
 #include "ODEWrapper.h"
-#include "VECTOR.h"
+#include "../math/VECTOR.h"
 
 struct ODEWrapper::impl
 {
@@ -22,7 +22,7 @@ struct ODEWrapper::impl
     std::vector<dBodyID> bodies;
     std::vector<dJointID> joints;
 
-    dBodyID addBody(ODEWrapper*, dGeomID&);
+    dBodyID addBody(ODEWrapper*, dGeomID&, VECTOR, VECTOR, VECTOR, VECTOR);
 
     dBodyID getBodyIDFromID(int i) { return bodies.at(i); }
 
@@ -36,9 +36,18 @@ ODEWrapper::ODEWrapper()
 }
 
 
-dBodyID ODEWrapper::impl::addBody(ODEWrapper*, dGeomID&)
+dBodyID ODEWrapper::impl::addBody(ODEWrapper*, dGeomID&, VECTOR pos, VECTOR vel, VECTOR ang, VECTOR w)
 {
     dBodyID id = dBodyCreate(world);
+    dBodySetPosition(id, pos.x, pos.y, pos.z);
+
+	dMatrix3 R;
+	dRFromEulerAngles(R, ang.x, ang.y, ang.z);
+	dBodySetRotation(id, R);
+
+	dBodySetLinearVel(id, vel.x, vel.y, vel.z);
+	dBodySetAngularVel(id, w.x,w.y, w.z);
+
     return id;
 }
 
@@ -67,20 +76,21 @@ int ODEWrapper::init()
 
 }
 
-int ODEWrapper::addCube(VECTOR pos, float sides, VECTOR vel0, float ang0, float ang_vel0, float mass)
+int ODEWrapper::addCube(VECTOR pos, float sides, VECTOR vel0, VECTOR ang0, VECTOR ang_vel0, float mass)
 {
 
     return addBox(pos, VECTOR(sides, sides, sides), vel0, ang0, ang_vel0, mass);
 
 }
 
-int ODEWrapper::addBox(VECTOR pos, VECTOR sides, VECTOR vel0, float ang0, float ang_vel0, float mass)
+int ODEWrapper::addBox(VECTOR pos, VECTOR sides, VECTOR vel0, VECTOR ang0, VECTOR ang_vel0, float mass)
 {
     dMass m;
 	dMassSetBoxTotal(&m, mass, sides.x, sides.y, sides.z);
 	dGeomID geom = dCreateBox(pimpl->space, sides.x, sides.y, sides.z);
+    dBodyID id   = pimpl->addBody(this, geom, pos, vel0, ang0, ang_vel0);
 
-    pimpl->bodies.push_back(pimpl->addBody(this, geom));
+    pimpl->bodies.push_back(id);
     return pimpl->bodies.size();
 
 }
@@ -144,6 +154,7 @@ void ODEWrapper::step(float timestep)
     dJointGroupEmpty(pimpl->contactgroup);
 }
 
+/*
 
 int main(int argc, char** argv)
 {
@@ -170,3 +181,4 @@ int main(int argc, char** argv)
 
     std::cout << "yay" << std::endl;
 }
+*/
