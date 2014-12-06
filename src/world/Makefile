@@ -22,18 +22,28 @@ all: ../entity/entity.o ../physics/ode.o world Makefile
 clean: 
 	rm *.o world
 
-world: world.o ../physics/ode.o ../entity/entity.o
-	$(CC) -o world *.o ../physics/ode.o ../entity/entity.o $(INCLUDELOCAL) $(LIBOPT) 
+world: world.o ../physics/ode.o ../entity/entity.o ../entity/geometry.o ../entity/box.o
+	$(CC) -o world *.o ../physics/ode.o ../entity/entity.o ../entity/geometry.o ../entity/box.o $(INCLUDELOCAL) $(LIBOPT) 
 
 ../physics/ode.o: ../physics/ODEWrapper.h ../physics/ODEWrapper.cpp ../math/VECTOR.h
 	cd ../physics; \
 	$(CC) -c ODEWrapper.cpp -o ode.o $(LIBOPT) $(INCLUDELOCAL)
 	cd ../world;
 
-../entity/entity.o: ../entity/entity.h ../Entity/Entity.cpp 
+../entity/entity.o: ../entity/Entity.h ../Entity/Entity.cpp 
 	cd ../entity; \
-	$(CC) -c entity.cpp -o entity.o $(LIBOPT) $(INCLUDELOCAL)
+	$(CC) -c Entity.cpp -o entity.o $(LIBOPT) $(INCLUDELOCAL)
+	cd ../world;
+
+../entity/geometry.o: ../entity/Geometry.h ../entity/Geometry.cpp
+	cd ../entity; \
+	$(CC) -c Geometry.cpp -o geometry.o $(LIBOPT) $(INCLUDELOCAL)
+	cd ../world;
+
+../entity/box.o: ../entity/Box.h ../entity/Box.cpp ../entity/Geometry.h
+	cd ../entity; \
+	$(CC) -c Box.cpp -o box.o $(LIBOPT) $(INCLUDELOCAL)
 	cd ../world;
 
 world.o: world.h world.cpp ../math/VECTOR.h ../entity/entity.h ../physics/ODEWrapper.h
-	$(CC) -c world.cpp $(LIBOPT) $(INCLUDELOCAL)
+	$(CC) -c World.cpp $(LIBOPT) $(INCLUDELOCAL)

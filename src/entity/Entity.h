@@ -3,11 +3,13 @@
 
 #include "../math/VECTOR.h"
 
+class Geometry;
+
 class Entity
 {
     public:
 
-        Entity(VECTOR p=VECTOR(0,0,0), VECTOR v=VECTOR(0,0,0), VECTOR r=VECTOR(0,0,0), VECTOR w=VECTOR(0,0,0));
+        Entity(Geometry*, VECTOR p=VECTOR(0,0,0), VECTOR v=VECTOR(0,0,0), VECTOR r=VECTOR(0,0,0), VECTOR w=VECTOR(0,0,0));
 
         int init();
 
@@ -15,6 +17,8 @@ class Entity
         VECTOR getVelocity();
         VECTOR getRotation();
         VECTOR getOmega();
+        Geometry* getGeometry();
+        void setGeometry(Geometry*);
 
     private:
 

@@ -9,6 +9,9 @@
 #include <vector>
 
 #include "world.h"
+#include "../entity/Geometry.h"
+#include "../entity/Box.h"
+
 #include "../math/VECTOR.h"
 #include "../physics/ODEWrapper.h"
 #include "../entity/Entity.h"
@@ -41,9 +44,12 @@ int World::init()
 int World::addEntity(Entity* e)
 {
 
-    int box1 = pimpl->simulator.addCube(e->getPosition(), 1, e->getVelocity(), e->getRotation(), e->getOmega(), 10);
+    int ent = -1;
+    if (e->getGeometry()->getType() == Geometry::Type::BOX) 
+        ent = pimpl->simulator.addBox(e->getPosition(), dynamic_cast<Box*>(e->getGeometry())->getSides(), e->getVelocity(), e->getRotation(), e->getOmega(), 10);
 
-    pimpl->entities.push_back(std::pair<Entity*, int>(e, box1));
+
+    pimpl->entities.push_back(std::pair<Entity*, int>(e, ent));
 
     return 0;
 
@@ -55,13 +61,13 @@ void World::go(float stepsize)
     {
         pimpl->simulator.step(stepsize);
 
-        /*
+        
         float pos = pimpl->simulator.getBodyPositionFromID(0).y;
 
         std::cout << pos << std::endl;
         if (pos < -5)
             break;
-            */
+            
 
     }
 }
@@ -75,7 +81,9 @@ int main(int argc, char** argv)
 
     world->init();
 
-    Entity* e = new Entity(VECTOR(0,-2,0));
+    Geometry* g = new Box(VECTOR(5,5,5));
+
+    Entity* e = new Entity(g, VECTOR(0,-2,0));
 
     world->addEntity(e);
 

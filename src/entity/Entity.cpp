@@ -7,8 +7,6 @@
 #include "entity.h"
 #include "../math/VECTOR.h"
 
-class Geometry;
-
 struct Entity::impl
 {
 
@@ -21,18 +19,30 @@ struct Entity::impl
     
 };
 
-Entity::Entity(VECTOR p, VECTOR v, VECTOR r, VECTOR w) 
+Entity::Entity(Geometry* g, VECTOR p, VECTOR v, VECTOR r, VECTOR w) 
 {
     pimpl = new impl();
     pimpl->pos = p;
     pimpl->vel = v;
     pimpl->rot = r;
     pimpl->ang_vel= w;
+
+    pimpl->geom = g;
 }
 
 int Entity::init()
 {
     return 0;
+}
+
+Geometry* Entity::getGeometry()
+{
+    return pimpl->geom;
+}
+
+void Entity::setGeometry(Geometry* g)
+{
+    pimpl->geom = g;
 }
 
 VECTOR Entity::getPosition()
