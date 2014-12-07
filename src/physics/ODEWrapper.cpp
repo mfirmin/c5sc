@@ -35,6 +35,28 @@ ODEWrapper::ODEWrapper()
     pimpl = new impl();
 }
 
+int ODEWrapper::init() 
+{
+
+	pimpl->world = dWorldCreate();
+	pimpl->space = dSimpleSpaceCreate(0);
+	pimpl->contactgroup = dJointGroupCreate(0);
+	pimpl->jointgroup = dJointGroupCreate(0);
+
+	dWorldSetGravity(pimpl->world, 0, -9.81, 0);
+
+	dWorldSetERP(pimpl->world, 0.5);
+	dWorldSetCFM(pimpl->world, 1e-5);
+
+	dWorldSetContactMaxCorrectingVel(pimpl->world, 0.3);
+
+	dWorldSetContactSurfaceLayer(pimpl->world, 0.001);
+
+	dWorldSetAutoDisableFlag(pimpl->world, 0);
+
+    return 0;
+
+}
 
 dBodyID ODEWrapper::impl::addBody(ODEWrapper*, dGeomID&, VECTOR pos, VECTOR vel, VECTOR ang, VECTOR w)
 {
@@ -51,31 +73,6 @@ dBodyID ODEWrapper::impl::addBody(ODEWrapper*, dGeomID&, VECTOR pos, VECTOR vel,
     return id;
 }
 
-int ODEWrapper::init() 
-{
-
-	pimpl->world = dWorldCreate();
-	pimpl->space = dSimpleSpaceCreate(0);
-	pimpl->contactgroup = dJointGroupCreate(0);
-	pimpl->jointgroup = dJointGroupCreate(0);
-
-
-	dWorldSetGravity(pimpl->world, 0, -9.81, 0);
-
-
-	dWorldSetERP(pimpl->world, 0.5);
-	dWorldSetCFM(pimpl->world, 1e-5);
-
-	dWorldSetContactMaxCorrectingVel(pimpl->world, 0.3);
-
-	dWorldSetContactSurfaceLayer(pimpl->world, 0.001);
-
-	dWorldSetAutoDisableFlag(pimpl->world, 0);
-
-    return 0;
-
-}
-
 int ODEWrapper::addCube(VECTOR pos, float sides, VECTOR vel0, VECTOR ang0, VECTOR ang_vel0, float mass)
 {
 
@@ -87,6 +84,7 @@ int ODEWrapper::addBox(VECTOR pos, VECTOR sides, VECTOR vel0, VECTOR ang0, VECTO
 {
     dMass m;
 	dMassSetBoxTotal(&m, mass, sides.x, sides.y, sides.z);
+
 	dGeomID geom = dCreateBox(pimpl->space, sides.x, sides.y, sides.z);
     dBodyID id   = pimpl->addBody(this, geom, pos, vel0, ang0, ang_vel0);
 
