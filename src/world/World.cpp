@@ -36,6 +36,7 @@ struct World::impl
 
     // Entity objects.
     std::vector<Entity*> entities;
+    std::pair<VECTOR, VECTOR> groundPlane;
     // references to simulation IDs.
     std::vector<int> simIDs;
 
@@ -86,12 +87,26 @@ int World::addPointLight(VECTOR pos)
 
 }
 
+int World::addGroundPlane(VECTOR a, VECTOR b)
+{
+    pimpl->simulator.addPlane(a, b);
+    pimpl->groundPlane = std::pair<VECTOR, VECTOR>(a,b);
+    return 0;
+}
+
 int World::addEntity(Entity* e)
 {
 
     int ent = -1;
-    if (e->getGeometry()->getType() == Geometry::Type::BOX) 
-        ent = pimpl->simulator.addBox(e->getPosition(), dynamic_cast<Box*>(e->getGeometry())->getSides(), e->getVelocity(), e->getRotation(), e->getOmega(), 10);
+    switch(e->getGeometry()->getType())
+    {
+        case Geometry::Type::BOX:
+            ent = pimpl->simulator.addBox(e->getPosition(), dynamic_cast<Box*>(e->getGeometry())->getSides(), e->getVelocity(), e->getRotation(), e->getOmega(), 10);
+            break;
+        default:
+            break;
+    }
+
 
     if (ent < 0)
     { 
@@ -196,6 +211,8 @@ int main(int argc, char** argv)
 
     world->addEntity(e);
     world->addEntity(e2);
+
+    world->addGroundPlane(VECTOR(-10,1,0), VECTOR(10,1,0));
 
     world->go(STEPSIZE);
 

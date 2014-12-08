@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <ode/ode.h>
+#include <cmath>
 
 #include <vector>
 
@@ -91,6 +92,17 @@ int ODEWrapper::addBox(VECTOR pos, VECTOR sides, VECTOR vel0, VECTOR ang0, VECTO
     pimpl->bodies.push_back(id);
     return pimpl->bodies.size()-1;
 
+}
+
+int ODEWrapper::addPlane(VECTOR a, VECTOR b)
+{
+    dReal dx = b.x - a.x, dy = b.y - a.y; 
+    dReal norm = sqrt(dx*dx + dy*dy);
+    dReal d = dy/norm * a.x - dx/norm * a.y;
+
+    // Planes have geometry but no body
+    dGeomID geom = dCreatePlane(pimpl->space, -dy/norm, dx/norm, 0, -d);
+    return 0;          
 }
 
 int addJoint(VECTOR pos, float theta=0, float dTheta=0)

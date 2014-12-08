@@ -13,6 +13,7 @@ class World
 
         int init();
         int addEntity(Entity* e);
+        int addGroundPlane(VECTOR, VECTOR);
         int addPointLight(VECTOR pos);
         void go(float stepsize);
 

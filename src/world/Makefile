@@ -25,7 +25,7 @@ all: world Makefile
 clean: 
 	rm *.o world
 
-world: world.o ../physics/ode.o ../entity/entity.o ../entity/geometry.o ../entity/box.o ../renderer/renderer.o
+world: world.o ../physics/ode.o ../entity/entity.o ../entity/geometry.o ../entity/box.o ../renderer/renderer.o 
 	$(CC) $(GLFW) -o world *.o ../physics/ode.o ../entity/entity.o ../entity/geometry.o ../entity/box.o ../renderer/renderer.o $(GLFW2) $(INCLUDELOCAL) $(LIBOPT)  
 
 ../renderer/renderer.o: ../entity/Entity.h ../entity/Geometry.h ../renderer/Renderer.cpp ../renderer/Renderer.h
