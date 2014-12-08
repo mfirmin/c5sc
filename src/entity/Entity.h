@@ -13,12 +13,26 @@ class Entity
 
         int init();
 
+
+        // Physical Properties
+
         VECTOR getPosition();
         VECTOR getVelocity();
         VECTOR getRotation();
         VECTOR getOmega();
         Geometry* getGeometry();
         void setGeometry(Geometry*);
+
+
+        // Stylistic Properties 
+        //
+
+        VECTOR getColor();
+        void setColor(VECTOR);
+
+        float getOpacity();
+        void setOpacity(float);
+
 
     private:
 

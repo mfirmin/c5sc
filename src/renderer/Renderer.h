@@ -1,6 +1,8 @@
 #ifndef RENDERER_H
 #define RENDERER_H 
 
+#include "../math/VECTOR.h"
+
 class Entity;
 
 class Renderer
@@ -12,6 +14,7 @@ class Renderer
         int init();
 
         int render(const std::vector<Entity*>&);
+        int addPointLight(VECTOR);
 
     private:
 

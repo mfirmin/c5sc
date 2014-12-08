@@ -50,6 +50,17 @@ int World::init()
 
 }
 
+int World::addPointLight(VECTOR pos)
+{
+    if (pimpl->renderer.addPointLight(pos) != 0)
+    {
+        std::cerr << "Error adding point light (world.cpp)" << std::endl;
+        return -1;
+    }
+    return 0;
+
+}
+
 int World::addEntity(Entity* e)
 {
 
@@ -97,7 +108,9 @@ int main(int argc, char** argv)
 
     world->init();
 
-    Geometry* g = new Box(VECTOR(5,5,5));
+    world->addPointLight(VECTOR(10,10,10));
+
+    Geometry* g = new Box(VECTOR(1,1,1));
 
     Entity* e = new Entity(g, VECTOR(0,-2,0));
 

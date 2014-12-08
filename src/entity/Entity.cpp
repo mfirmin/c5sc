@@ -14,6 +14,8 @@ struct Entity::impl
     VECTOR vel;
     VECTOR rot;
     VECTOR ang_vel;
+    VECTOR color;
+    float opacity;
 
     Geometry* geom;
     
@@ -27,12 +29,35 @@ Entity::Entity(Geometry* g, VECTOR p, VECTOR v, VECTOR r, VECTOR w)
     pimpl->rot = r;
     pimpl->ang_vel= w;
 
+    pimpl->color = VECTOR(.5,.5,.5);
+    pimpl->opacity = 1;
+
     pimpl->geom = g;
 }
 
 int Entity::init()
 {
     return 0;
+}
+
+VECTOR Entity::getColor()
+{
+    return pimpl->color;
+}
+
+void Entity::setColor(VECTOR c)
+{
+    pimpl->color = c;
+}
+
+float Entity::getOpacity()
+{
+    return pimpl->opacity;
+}
+
+void Entity::setOpacity(float o)
+{
+    pimpl->opacity = o;
 }
 
 Geometry* Entity::getGeometry()
