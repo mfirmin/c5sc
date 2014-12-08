@@ -75,20 +75,36 @@ VECTOR Entity::getPosition()
     return pimpl->pos;
 
 }
+void Entity::setPosition(VECTOR pos)
+{
+    pimpl->pos = pos;
+}
 VECTOR Entity::getVelocity()
 {
     return pimpl->vel;
 
+}
+void Entity::setVelocity(VECTOR vel)
+{
+    pimpl->vel = vel;
 }
 VECTOR Entity::getRotation()
 {
     return pimpl->rot;
 
 }
+void Entity::setRotation(VECTOR rot)
+{
+    pimpl->rot = rot;
+}
 VECTOR Entity::getOmega()
 {
     return pimpl->ang_vel;
 
+}
+void Entity::setOmega(VECTOR o)
+{
+    pimpl->ang_vel = o;
 }
 
 /*

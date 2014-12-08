@@ -89,7 +89,7 @@ int ODEWrapper::addBox(VECTOR pos, VECTOR sides, VECTOR vel0, VECTOR ang0, VECTO
     dBodyID id   = pimpl->addBody(this, geom, pos, vel0, ang0, ang_vel0);
 
     pimpl->bodies.push_back(id);
-    return pimpl->bodies.size();
+    return pimpl->bodies.size()-1;
 
 }
 
@@ -139,10 +139,8 @@ static void nearCallback(void *data, dGeomID o1, dGeomID o2)
 
 VECTOR ODEWrapper::getBodyPositionFromID(int id)
 {
-
     const dReal* pos = dBodyGetPosition(pimpl->getBodyIDFromID(id));
     return VECTOR(pos[0], pos[1], pos[2]);
-
 }
 
 void ODEWrapper::step(float timestep) 

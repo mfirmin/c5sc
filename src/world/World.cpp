@@ -8,6 +8,12 @@
 
 #include <vector>
 
+#include <time.h>
+
+#ifdef __APPLE__
+#include <sys/time.h>
+#endif
+
 #include "world.h"
 #include "../entity/Geometry.h"
 #include "../entity/Box.h"
@@ -16,6 +22,14 @@
 #include "../physics/ODEWrapper.h"
 #include "../entity/Entity.h"
 #include "../renderer/Renderer.h"
+
+
+#ifdef __APPLE__
+typedef timeval _timeval;
+#endif
+#ifndef __APPLE__
+typedef timespec _timeval;
+#endif
 
 struct World::impl
 {
@@ -28,6 +42,16 @@ struct World::impl
     ODEWrapper simulator;
 
     Renderer renderer;
+
+    void updateEntities();
+
+    void waitForRender(_timeval&);
+
+    float frameTime;
+
+    const float framerate = 1./30.;
+
+    // Last render;
 
 };
 
@@ -42,6 +66,7 @@ int World::init()
     pimpl->simulator = ODEWrapper();
     pimpl->simulator.init();
     pimpl->renderer = Renderer();
+    pimpl->frameTime = 0;
 
     pimpl->renderer.init();
 
@@ -78,22 +103,73 @@ int World::addEntity(Entity* e)
     pimpl->simIDs.push_back(ent);;
 
     return 0;
+}
+
+void World::impl::updateEntities()
+{
+
+    auto IDit = simIDs.begin();
+    for (auto it = entities.begin(); it != entities.end(); it++)
+    {
+        (*it)->setPosition(simulator.getBodyPositionFromID(*IDit));
+        IDit++;
+    }
+
+}
+
+void World::impl::waitForRender(_timeval& last)
+{
+	long frame = (framerate * 1E9);
+    int i = 0;
+    _timeval now;
+#ifndef __APPLE__
+    clock_gettime(CLOCK_REALTIME, &now);
+    while ( (now.tv_sec * 1E9 + now.tv_nsec) - (last.tv_sec * 1E9 + last.tv_nsec) < frame)
+    {
+        clock_gettime(CLOCK_REALTIME, &now);
+    }
+
+    clock_gettime(CLOCK_REALTIME, &last);
+#endif
+    
+#ifdef __APPLE__
+    gettimeofday(&now, NULL);
+    while ( (now.tv_sec * 1E9 + now.tv_usec * 1E3) - (last.tv_sec * 1E9 + last.tv_usec * 1E3) < frame)
+    {
+        gettimeofday(&now, NULL);
+        i++;
+    }
+
+    gettimeofday(&last, NULL);
+#endif
 
 }
 
 void World::go(float stepsize)
 {
+#ifndef __APPLE__
+	timespec last;
+    clock_gettime(CLOCK_REALTIME, &last);
+#endif
+
+#ifdef __APPLE__
+    timeval last;
+    gettimeofday(&last, NULL);
+#endif
     while (true)
     {
         pimpl->simulator.step(stepsize);
 
-        pimpl->renderer.render(pimpl->entities);
-        
-        float pos = pimpl->simulator.getBodyPositionFromID(0).y;
+        pimpl->updateEntities();
+        pimpl->frameTime+= stepsize;
 
-//        std::cout << pos << std::endl;
-//        if (pos < -5)
- //           break;
+        if (pimpl->frameTime > pimpl->framerate)
+        {
+            pimpl->waitForRender(last);
+            pimpl->renderer.render(pimpl->entities);
+            pimpl->frameTime = 0;
+        }
+        
             
 
     }
@@ -112,9 +188,14 @@ int main(int argc, char** argv)
 
     Geometry* g = new Box(VECTOR(1,1,1));
 
-    Entity* e = new Entity(g, VECTOR(0,-2,0));
+    Entity* e = new Entity(g, VECTOR(0,10,0));
+    e->setColor(VECTOR(1,.3,.3));
+
+    Entity* e2 = new Entity(new Box(VECTOR(2,1,1)), VECTOR(0,15,0));
+    e2->setColor(VECTOR(0,.4,.7));
 
     world->addEntity(e);
+    world->addEntity(e2);
 
     world->go(STEPSIZE);
 

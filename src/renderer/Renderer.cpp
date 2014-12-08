@@ -157,7 +157,7 @@ void Renderer::impl::renderBox(Entity* e)
 
     setMaterialProperties(color.x, color.y, color.z, opacity);
 
-    glTranslatef(0,0,-10);
+    glTranslatef(pos.x, pos.y, pos.z-10);
 
     VECTOR sides = dynamic_cast<Box*>(e->getGeometry())->getSides();
 

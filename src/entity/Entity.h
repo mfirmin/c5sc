@@ -17,9 +17,13 @@ class Entity
         // Physical Properties
 
         VECTOR getPosition();
+        void setPosition(VECTOR);
         VECTOR getVelocity();
+        void setVelocity(VECTOR);
         VECTOR getRotation();
+        void setRotation(VECTOR);
         VECTOR getOmega();
+        void setOmega(VECTOR);
         Geometry* getGeometry();
         void setGeometry(Geometry*);
 
