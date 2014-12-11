@@ -27,7 +27,7 @@ struct ODEWrapper::impl
 
     dBodyID getBodyIDFromID(int i) { return bodies.at(i); }
 
-    void nearCallback(void*, dGeomID, dGeomID);
+    static void nearCallback(void*, dGeomID, dGeomID);
 };
 
 ODEWrapper::ODEWrapper() 
@@ -89,6 +89,10 @@ int ODEWrapper::addBox(VECTOR pos, VECTOR sides, VECTOR vel0, VECTOR ang0, VECTO
 	dGeomID geom = dCreateBox(pimpl->space, sides.x, sides.y, sides.z);
     dBodyID id   = pimpl->addBody(this, geom, pos, vel0, ang0, ang_vel0);
 
+	dBodySetMass(id, &m);
+
+    dGeomSetBody(geom, id);
+
     pimpl->bodies.push_back(id);
     return pimpl->bodies.size()-1;
 
@@ -112,16 +116,31 @@ int addJoint(VECTOR pos, float theta=0, float dTheta=0)
 
 }
 
+struct nearCallback_data 
+{
 
-static void nearCallback(void *data, dGeomID o1, dGeomID o2)
+    dWorldID world;
+    dJointGroupID contactgroup;
+
+};
+
+void nearCallback(void *data, dGeomID o1, dGeomID o2)
 {
 	int i;
 	dBodyID b1 = dGeomGetBody(o1);
 	dBodyID b2 = dGeomGetBody(o2);
 
 
+    //if (dBodyGetWorld(b1) != dBodyGetWorld(b2)) { return; }
 
-        int MAX_CONTACTS = 5;
+    dWorldID world = ((nearCallback_data*)(data))->world;
+    dJointGroupID contactgroup = ((nearCallback_data*)(data))->contactgroup;
+
+//    std::cout << dBodyGetWorld(b2) << "   " << world << std::endl;
+
+
+
+    int MAX_CONTACTS = 6;
 	dContact contact[MAX_CONTACTS];
 
 
@@ -138,13 +157,10 @@ static void nearCallback(void *data, dGeomID o1, dGeomID o2)
 	}
 	if (int numc = dCollide(o1, o2, MAX_CONTACTS, &contact[0].geom, sizeof(dContact)))
 	{
-
 		for (i = 0; i < numc; i++)
 		{
-            /*
-			dJointID c = dJointCreateContact(pimpl->world, pimpl->contactgroup, contact + i);
+			dJointID c = dJointCreateContact(world, contactgroup, contact + i);
 			dJointAttach(c, b1, b2);
-            */
 		}
 	}
 }
@@ -157,7 +173,11 @@ VECTOR ODEWrapper::getBodyPositionFromID(int id)
 
 void ODEWrapper::step(float timestep) 
 {
-    dSpaceCollide(pimpl->space, 0, &nearCallback);
+    nearCallback_data* ncd = new nearCallback_data();
+    ncd->world = pimpl->world;
+    ncd->contactgroup= pimpl->contactgroup;
+
+    dSpaceCollide(pimpl->space, (void*)(ncd), &(nearCallback));
     dWorldQuickStep(pimpl->world, timestep);
     dJointGroupEmpty(pimpl->contactgroup);
 }
